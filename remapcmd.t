@@ -1038,14 +1038,13 @@ getDataType(data) {
         case TypeFuncPtr: s='func-ptr'; break;
         case TypeProp: s='property'; break;
         case TypeNil: s='nil'; break;
-        case TypeTrue: s='nil'; break;
+        case TypeTrue: s='true'; break;
         case TypeEnum: s='enum'; break;
 
         // grammars
         case GramTokTypeProd: s='gramProd'; break;
         case GramTokTypeSpeech: s='gramSpeech'; break;
         case GramTokTypeNSpeech: s='gramNSpeech'; break;
-        case GramTokTypeLiteral: s='gramLiteral'; break;
         case GramTokTypeLiteral: s='gramLiteral'; break;
         case GramTokTypeTokEnum: s='gramEnum'; break;
         case GramTokTypeStar: s='gramStar'; break;
