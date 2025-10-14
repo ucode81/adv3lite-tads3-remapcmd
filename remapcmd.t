@@ -952,7 +952,7 @@ modify Parser
  *   showIntro for quick/easy/immediate access
  */
 
-#if 1
+#if 0
 tok_test2()
 {    
     local tmap = new LookupTable([tokWord,'word',tokString,'string',tokOp,'operator']);
