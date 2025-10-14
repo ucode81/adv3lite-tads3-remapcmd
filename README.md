@@ -17,23 +17,24 @@ What do we want in our RemapCmd
 ## RemapCmd Documentation
 ### Template
 RemapCmd via the template is easiest way to use this.  In your main header file, add the following template:
-`RemapCmd template 'cmd' @location? 'remappedCmd'?;
+
+`RemapCmd template 'cmd' @location? 'remappedCmd'?;`
 
 ### Usage
-RemapCmd has one source text 'cmd' that contains one or more phrases (separated by ';') that supports grouping via '(...)' and or via '|'.  Here is an example (and, yes, most of this would work natively but this is an example, starting with a simple one:
+RemapCmd has one source text 'cmd' that contains one or more phrases (separated by ';') that supports grouping via '(...)' and or via '|'.  Here is an example (and, yes, most of this would work natively but this is just an example).
 
-We have a verb HoldUp (hold up) that takes one object.  The light is not known and we don't want to define it, so we write:
+We have a verb HoldUp (hold up) that takes one object.  However, *light* and *ceiling* are not nouns and we don't want to define them but want to handle the paper.
 
 `RemapCmd 'hold paper up to light;hold paper against (\'\'|ceiling) light' @brightRoom 'hold up paper';`
 
 (RemapCmd accepts words enclosed by '...' but you have to escape them in source text; this is the only way to include an empty-string word.)
 
 So, how this works is that RemapCmd will look at the following phrases as a match:
-- hold paper up to light
-- hold paper against light
-- hold paper against ceiling light
+- `hold paper up to light`
+- `hold paper against light`
+- `hold paper against ceiling light`
 
-If this matches, RemapCmd will replace that string with the command 'hold up paper' -- as if that is what you typed in.  However, it will ONLY do this if the current location is `brightRoom`.
+If this matches, RemapCmd will replace that string with the command `hold up paper` -- as if that is what you typed in.  However, it will ONLY do this if the current location is `brightRoom`.
 
 Less common usage would be to execute some code.  You do this by NOT specifying the remapped text and defining an `execute()':
 ```
