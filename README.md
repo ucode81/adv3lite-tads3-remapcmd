@@ -24,7 +24,7 @@ RemapCmd has one source text 'cmd' that contains one or more phrases (separated 
 
 We have a verb HoldUp (hold up) that takes one object.  The light is not known and we don't want to define it, so we write:
 
-`RemapCmd 'hold paper up to light;hold paper against (\'\'|ceiling) light' 'hold up paper';`
+`RemapCmd 'hold paper up to light;hold paper against (\'\'|ceiling) light' @brightRoom 'hold up paper';`
 
 (RemapCmd accepts words enclosed by '...' but you have to escape them in source text; this is the only way to include an empty-string word.)
 
@@ -33,11 +33,11 @@ So, how this works is that RemapCmd will look at the following phrases as a matc
 - hold paper against light
 - hold paper against ceiling light
 
-If this matches, RemapCmd will replace that string with the command 'hold up paper' -- as if that is what you typed in.
+If this matches, RemapCmd will replace that string with the command 'hold up paper' -- as if that is what you typed in.  However, it will ONLY do this if the current location is `brightRoom`.
 
 Less common usage would be to execute some code.  You do this by NOT specifying the remapped text and defining an `execute()':
 ```
-RemapCmd 'hold paper up to light;hold paper against (\'\'|ceiling) light'
+RemapCmd 'hold paper up to light;hold paper against (\'\'|ceiling) light' @brightRoom
   execute()
   {
     doInstead(HoldUp,paper);
@@ -45,7 +45,7 @@ RemapCmd 'hold paper up to light;hold paper against (\'\'|ceiling) light'
 ;
 ```
 
-While the `execute()` allows one to write arbitrary code, you should limit what you do.  A third way to use it is to just emit some message(s) to the console.  This is a great way to respond to some text without having to define all of the objects.  Say we have included rocks in our description of some location, but do not have a rock object:
+While `execute()` allows one to write arbitrary code, you should limit what you do.  A third use case is to just emit some message(s) to the console.  This is a great way to respond to some text without having to define all of the objects.  Say we have included rocks in our description of some location, but do not have a rock object:
 
 ```
 RemapCmd '(throw|toss) rock ((at sky)|(up in the air))'
@@ -65,9 +65,11 @@ You throw the rock high in the sky and it comes back down with a plop.
 ```
 
 ### Operation
-RemapCmd parses up the cmd and does not make any attempt to map the words to existing objects in the game.  Rather, it builds all the possible variations (by the use of "|", "(" and ")" operators) and then matches that against the user input FIRST before any other routines get a whack at it.  You can also provide two or more disjoint phrases that are separated by semi-colon ";" to provide additional phrases that match.  Phrases can contain words with offset by '..' but you will need to use \'; this can be used to have a compound word with a space treated as one object and is the only way to add an empty string for some match condition.
+RemapCmd parses up the cmd and does not make any attempt to map the words to existing objects in the game.  Rather, it builds all the possible variations (by the use of "|", "(" and ")" operators) and then matches that against the user input FIRST before any other routines get a whack at it.  You can also provide two or more disjoint phrases that are separated by semi-colon ";" to provide additional phrases that match.
 
-RemapCmd takes advantage of string hashing to ensure high performance within your game
+Phrases can contain words with offset by '..' but you will need to use backslash as in `\'`; this can be used to have a compound word with a space treated as one object and is the only way to add an empty string for some match condition.
+
+RemapCmd takes advantage of string hashing to ensure high performance within your game.
 
 It does modify the `parse(str)` command in `parser.t`.
 
