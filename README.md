@@ -63,11 +63,13 @@ You throw the rock high in the sky and it comes back down with a plop.
 
 >
 ```
+---
+**NOTE:** RemapCmd has a restriction on source text phrase in that, outside of its the special characters described above, it does not allow any other special or punctuation characters other than comma ',' or apostrophe (').
 
 ### Operation
 RemapCmd parses up the cmd and does not make any attempt to map the words to existing objects in the game.  Rather, it builds all the possible variations (by the use of "|", "(" and ")" operators) and then matches that against the user input FIRST before any other routines get a whack at it.  You can also provide two or more disjoint phrases that are separated by semi-colon ";" to provide additional phrases that match.
 
-Phrases can contain words with offset by '..' but you will need to use backslash as in `\'`; this can be used to have a compound word with a space treated as one object and is the only way to add an empty string for some match condition.
+Phrases can contain words offset with single quotes ('..') but you will need to use backslash as in `\'` within the text itself. This capability can be used to have a compound word with a space in it treated as one object and is the *only* way to add an empty string for some match condition.
 
 RemapCmd takes advantage of string hashing to ensure high performance within your game.
 
