@@ -484,6 +484,8 @@ modify Parser
                         remapCmdItem = remapCmdDicts.processCmd(toks,remapCmdTokCnt);
                         if(dataType(remapCmdItem) == TypeSString) {
                             local remaptoks = parseToksOnly(remapCmdItem);
+                            if(remaptoks == nil)
+                                return;
                             local i = remapCmdTokCnt;
                             remapCmdTokCnt = remaptoks.length();
                             // rip out old tokens and replace with new ones!
