@@ -14,6 +14,15 @@
  *  OR  2. Do a normal doInstead command with the appropriate values [via execute()]
  *      3. Or put out a message with "" that ends the command [via execute()]
  *
+ *
+ *  Contributed by Mitchell Mlinar
+ *  Copyright (c) 2025
+ *
+ *  Licensed using MIT defintion
+ *
+ *
+ *  v1.0: 14 Oct 2025
+ *
  */
 
 #include "advlite.h"
