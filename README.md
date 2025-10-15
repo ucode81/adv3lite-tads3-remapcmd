@@ -23,7 +23,7 @@ What do we want in our RemapCmd
 ### Template
 RemapCmd via the template is easiest way to use this.  In your main header file, add the following template:
 
-`RemapCmd template 'cmd' @location? 'remappedCmd'?;`
+`RemapCmd template 'cmd' @where? 'remappedCmd'?;`
 
 ### Usage
 RemapCmd has one source text 'cmd' that contains one or more phrases (separated by ';') that supports grouping via '(...)' and or via '|'.  Here is an example (and, yes, most of this would work natively but this is just an example).
