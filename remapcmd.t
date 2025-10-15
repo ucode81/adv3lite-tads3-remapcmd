@@ -22,6 +22,7 @@
  *
  *
  *  v1.0: 14 Oct 2025
+ *  v1.1: 15 Oct 2025 (thanks to advice/feedback from Eric Eve)
  *
  */
 
@@ -66,20 +67,40 @@ class RemapCmd: object
     
     // the remapped (replacement) text (if provided)
     remappedCmd = nil
-
-    // where this can happen (nil if everywhere)
-    locn = nil
     
     // if remapped command is NOT provided, then it is expected to run this
-    // you should override this in your instance!
-    // options are to put in a message or to use doInstead()
-    execute() {
-    }
+    // you should override this in your instance to do SOMETHING!
+    execute() {}
+
+    // where this can happen (nil if everywhere); can be Room/Region or list of
+    where = nil
+    
+    /* 
+     *   Change to 0 if we want execute() to NOT count as a turn
+     *   as only doInstead() will automatically handle a turn
+     */
+    turnsTaken = 1
+    
+    // under what circumstances this can happen (true if always)
+    when = true
+    
+    // A scene that must be happening, or list one of scenes of which must be happening
+    // for this to happen (nil if no scene is required)
+    during = nil
     
     //////////////////////////////////////////
     // Internals
     //
+        
+    /* Execute our custom method and then our turn sequence. */
+    execute_()
+    {
+        execute();        
+        turnSequence();
+    }
     
+    turnSequence() { delegated Action; }
+
     doInsteadItems = nil    // if a list, then doInstead was invoked
     
     doInstead(action,[args]) {
@@ -153,7 +174,9 @@ remapCmdDicts: PreinitObject
             }
             // have the parsed up items -- now join them up into individual possible commands
             foreach(toks in lst) {
+                // always only allow ONE space between words
                 res = toks.join(' ').findReplace(R'<Space><Space>+',' ',ReplaceAll);
+                res = res.findReplace(R'(^<Space>+)|(<Space>+$)','',ReplaceAll);
                 obj.cmdTerms = obj.cmdTerms.append(res);
                 res = scmp.calcHash(res);
                 obj.cmdTermHash = obj.cmdTermHash.append(res);
@@ -189,7 +212,9 @@ remapCmdDicts: PreinitObject
         // scan the items that fit
         foreach(obj in remapTbl[ahash]) {
             // support list of locations???
-            if(obj.locn != nil && obj.locn != gLocation) continue;
+            if(obj.where != nil && valToList(obj.where).indexWhich({x:gLocation.isOrIsIn(x)}) == nil ) continue; // ECSE mod
+            if(!obj.when) continue; // ECSE mod
+            if(obj.during != nil && valToList(obj.during).indexWhich({s:s.isHappening}) == nil) continue; // ECSE mod
             for(v = 1; v <= obj.cmdTermHash.length(); ++v) {
                 if(obj.cmdTermHash[v] == ahash && 
                    scmp.matchValues(obj.cmdTerms[v],acmd) != 0) {
@@ -242,6 +267,7 @@ remapCmdTokenizer: Tokenizer
         ['string', R'\\?\'(<AlphaNum>|[-\'])*\\?\'', tokWord, &tokCvtStripSingle, nil],
 
         // operators
+        ['emptystring',R'(<vbar><Space>*<rparen>)|(<lparen><Space>*<vbar>)', tokOp, &tokDoEmptyString, nil],
         ['operator', R'[|()]', tokOp, nil, nil]
     ]
     
@@ -255,6 +281,15 @@ remapCmdTokenizer: Tokenizer
             txt = txt.substr(1,txt.length() - 1);
         local newlen = txt.length() - 2;
         toks.append([txt.substr(2,newlen).toLower(), typ, txt]);
+    }
+    
+    /* handle the |) or the (| sequence */
+    tokDoEmptyString(txt, typ, toks)
+    {
+        local len = txt.length();
+        toks.append([txt.substr(1,1),typ,txt.substr(1,1)]);
+        toks.append(['',tokWord,'']);
+        toks.append([txt.substr(len,1),typ,txt.substr(len,1)]);
     }
 ;
 
@@ -510,7 +545,7 @@ modify Parser
                         cmdLst = new CommandList(
                             root, toks, cmdDict, { p: new Command(p) });
                     } else {
-                        remapCmdItem.execute();
+                        remapCmdItem.execute_(); // ECSE mod
                         if(remapCmdItem.doInsteadItems != nil) {
                             // create the artificial command
                             local cobj = remapCmdItem.doInsteadItems;
