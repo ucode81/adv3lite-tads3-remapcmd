@@ -64,7 +64,7 @@ RemapCmd 'fee fie foe foo' @giantRoom
   execute()
   {
     eggs.moveInto(giantRoom);
-    "The eggs {I} gave to the troll have mysteriously re-appeared on the floor in front of {me}. ";
+    "The eggs {i} gave to the troll have mysteriously re-appeared on the floor in front of {me}. ";
   }
   when = eggs.isIn(troll);
 ;
