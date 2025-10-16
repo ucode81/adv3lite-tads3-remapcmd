@@ -75,18 +75,18 @@ class RemapCmd: object
     // where this can happen (nil if everywhere); can be Room/Region or list of
     where = nil
     
-    /* 
-     *   Change to 0 if we want execute() to NOT count as a turn
-     *   as only doInstead() will automatically handle a turn
-     */
-    turnsTaken = 1
-    
     // under what circumstances this can happen (true if always)
     when = true
     
     // A scene that must be happening, or list one of scenes of which must be happening
     // for this to happen (nil if no scene is required)
     during = nil
+    
+    /* 
+     *   Change to 0 if we want execute() to NOT count as a turn
+     *   as only doInstead() will automatically handle a turn
+     */
+    turnsTaken = 1
     
     //////////////////////////////////////////
     // Internals
