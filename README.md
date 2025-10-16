@@ -86,7 +86,7 @@ Here are all of the properties with the first three set by the template:
 - **cmd**: The source text that defines the phrase(s) that should be remapped (as described above).
 - **remappedCmd**: If present, the replacement command text; this must be a command your game processes.
 - **where**: Set to *nil* by default, which means this remap command works everywhere. You can set this to a Room, Region, or list of Rooms/Regions where this remap command is active; it will then be *inactive* (and, thus, unavailable) outside of those Rooms/Regions.
-- **when**: Set to *true* by default, so always active, you can define specific condition(s) needed to be true for the remap command to be active.
+- **when**: Set to *true* by default, so always active, but you can define specific condition(s) needed to be true for the remap command to be active.
 - **during**: Set to *nil* by default, so active during all Scenes. You can set this to a Scene (or list of Scenes) where this remap command is active; it will then be *inactive* (and, thus, unavailable) outside of those Scene(s).
 - **turnsTaken**: Normally, you would want any non-system command to take a turn, so this is set to 1 by default.  However, if it is a system command or there is another reason to not count a turn, set this to 0.  Note that if `doInstead(...)` is used, this property is ignored.
 - **execute()**: This is only called if `remappedCmd = nil` and contains normal ADV3LITE/TADS3 code.
