@@ -21,8 +21,8 @@
  *  Licensed using MIT defintion
  *
  *
- *  v1.0: 14 Oct 2025
- *  v1.1: 15 Oct 2025 (thanks to advice/feedback from Eric Eve)
+ *  v1.00: 14 Oct 2025
+ *  v1.02: 15 Oct 2025 (thanks to advice/feedback from Eric Eve)
  *
  */
 
@@ -83,8 +83,9 @@ class RemapCmd: object
     during = nil
     
     /* 
-     *   Change to 0 if we want execute() to NOT count as a turn
-     *   as only doInstead() will automatically handle a turn
+     *   By default, you generally want any non-system command to take a turn.
+     *   However, there may also be other circumstances where a turn should not be
+     *   consumed.  Change to 0 if we want execute() to NOT count as a turn.
      */
     turnsTaken = 1
     
@@ -95,6 +96,7 @@ class RemapCmd: object
     /* Execute our custom method and then our turn sequence. */
     execute_()
     {
+        "<.p0>";
         execute();        
         turnSequence();
     }
