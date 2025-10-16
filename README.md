@@ -57,7 +57,7 @@ How often have you told yourself to quit doing that...
 >
 ```
 
-A special `doInstead(...)` is supported with RemapCmd so you can do something like this:
+The familiar `doInstead(...)` from Doer is supported with RemapCmd so you can do something like this:
 ```
 RemapCmd 'sing loudly'
   execute()
