@@ -69,6 +69,17 @@ RemapCmd 'fee fie foe foo' @giantRoom
   when = eggs.isIn(troll)
 ;
 ```
+
+Here are all of the properties with the first three set by the template:
+
+- **cmd**: The source text that defines the phrase(s) that should be remapped (as described above).
+- **remappedCmd**: If present, the replacement command text; this must be a command your game processes.
+- **where**: Set to *nil* by default, you can define a Room, Region, or list of Rooms/Regions where this remap command is active; it is *inactive* (and, thus, unavailable) outside of those Rooms/Regions.
+- **when**: Set to *true* by default, you can define the condition(s) for the remap command to be active.
+- **during**: Set to *nil* by default, you can define a Scene (or list of Scenes) where this remap command is active; it is *inactive* (and, thus, unavailable) outside of those Scene(s).
+- **turnsTaken**: This is set to 1 by default, but if your remap command should not consume a turn, set this to 0.
+- **execute()**: This is only called if `remappedCmd = nil` and contains normal ADV3LITE/TADS3 code.
+
 ---
 **NOTE:** RemapCmd has a restriction on the source text phrase in that, outside of its the special characters described above, it does not allow any other special or punctuation characters other than comma ',' or apostrophe (').
 
