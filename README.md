@@ -77,7 +77,7 @@ Here are all of the properties with the first three set by the template:
 - **where**: Set to *nil* by default, you can define a Room, Region, or list of Rooms/Regions where this remap command is active; it is *inactive* (and, thus, unavailable) outside of those Rooms/Regions.
 - **when**: Set to *true* by default, you can define the condition(s) for the remap command to be active.
 - **during**: Set to *nil* by default, you can define a Scene (or list of Scenes) where this remap command is active; it is *inactive* (and, thus, unavailable) outside of those Scene(s).
-- **turnsTaken**: This is set to 1 by default, but if your remap command should not consume a turn, set this to 0.
+- **turnsTaken**: Normally, you would want any non-system command to take a turn, so this is set to 1 by default.  However, if it is a system command or this is another reason to not count a turn, set this to 0.
 - **execute()**: This is only called if `remappedCmd = nil` and contains normal ADV3LITE/TADS3 code.
 
 ---
