@@ -23,6 +23,7 @@
  *
  *  v1.00: 14 Oct 2025
  *  v1.02: 15 Oct 2025 (thanks to advice/feedback from Eric Eve)
+ *  v1.03: 16 Oct 2025 (thanks to additional advice/feedback from Eric Eve)
  *
  */
 
@@ -101,7 +102,10 @@ class RemapCmd: object
         turnSequence();
     }
     
-    turnSequence() { delegated Action; }
+    turnSequence() { 
+        if(doInsteadItems == nil)
+            delegated Action;
+    }
 
     doInsteadItems = nil    // if a list, then doInstead was invoked
     
@@ -113,6 +117,12 @@ class RemapCmd: object
         
         local deftext = '';
         local len = args.length();
+
+        if(doInsteadItems != nil) {
+            "ERROR in doInstead(...) for remapCmd:\nYou cannot have more than one
+            doInstead\b";
+            abort;
+        }
         if(action == nil)
             deftext += 'action is undefined!\n';
         if(dobj == nil && len > 0)
