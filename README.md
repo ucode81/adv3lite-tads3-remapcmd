@@ -57,6 +57,17 @@ How often have you told yourself to quit doing that...
 >
 ```
 
+A special `doInstead(...)` is supported with RemapCmd so you can do something like this:
+```
+RemapCmd 'sing loudly'
+  execute()
+  {
+    doInstead(Yell);
+  }
+;
+```
+Note the use of `doInstead(...)` imposes some restrictions and guidelines.  First, `doInstead(...)` should be the LAST line/call inside of `execute()`.  Second, the turn counter will be affected by what the redirected `doInstead(...)` command does and the **turnsTaken** property inside of RemapCmd will be ignored.
+
 The addition of `execute()` opens up other possibilities.  Let's look at another example from the Colossus Cave (thanks to Eric Eve for the suggestion):
 
 ```
@@ -77,7 +88,7 @@ Here are all of the properties with the first three set by the template:
 - **where**: Set to *nil* by default, which means this remap command works everywhere. You can set this to a Room, Region, or list of Rooms/Regions where this remap command is active; it will then be *inactive* (and, thus, unavailable) outside of those Rooms/Regions.
 - **when**: Set to *true* by default, so always active, you can define specific condition(s) needed to be true for the remap command to be active.
 - **during**: Set to *nil* by default, so active during all Scenes. You can set this to a Scene (or list of Scenes) where this remap command is active; it will then be *inactive* (and, thus, unavailable) outside of those Scene(s).
-- **turnsTaken**: Normally, you would want any non-system command to take a turn, so this is set to 1 by default.  However, if it is a system command or there is another reason to not count a turn, set this to 0.
+- **turnsTaken**: Normally, you would want any non-system command to take a turn, so this is set to 1 by default.  However, if it is a system command or there is another reason to not count a turn, set this to 0.  Note that if `doInstead(...)` is used, this property is ignored.
 - **execute()**: This is only called if `remappedCmd = nil` and contains normal ADV3LITE/TADS3 code.
 
 ---
