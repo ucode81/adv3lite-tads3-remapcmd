@@ -39,7 +39,7 @@ So, how this works is that RemapCmd will look at the following phrases as a matc
 
 If this matches, RemapCmd will replace that string with the command `hold up paper` -- as if that is what you typed in.  However, it will ONLY do this if the current location is `brightRoom`.  (The *where* location can be a Room, Region, or a list of Rooms and/or Regions.)
 
-Another use case is to just emit some message(s) to the console. This is a great way to respond to some text without having to define all (or any) of the objects which entails running some additional code. You do this by **NOT** specifying the remapped text and defining  `execute()` function inside of RemapCmd:
+Another use case is to just emit some message(s) to the console. This is a great way to respond to some text without having to define all (or any) of the objects that entails writing some additional code to define words only used once. You do this by **NOT** specifying the remapped text and defining `execute()` function inside of RemapCmd:
 
 ```
 RemapCmd 'spit (|(on the ground))'
