@@ -87,6 +87,7 @@ class RemapCmd: object
      *   By default, you generally want any non-system command to take a turn.
      *   However, there may also be other circumstances where a turn should not be
      *   consumed.  Change to 0 if we want execute() to NOT count as a turn.
+     *   This property is ignored if doInstead(...) is called within execute()
      */
     turnsTaken = 1
     
