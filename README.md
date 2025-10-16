@@ -45,14 +45,14 @@ Another use case is to just emit some message(s) to the console. This is a great
 RemapCmd 'spit (|(on the ground))'
   execute()
   {
-    "How often have you told yourself to quit that disgusting habit... ";
+    "How often have you told yourself to quit doing that... ";
   }
 ;
 ```
 So now when you run this, here is what you see:
 ```
 > spit on the ground
-How often have you told yourself to quit that disgusting habit...
+How often have you told yourself to quit doing that...
 
 >
 ```
